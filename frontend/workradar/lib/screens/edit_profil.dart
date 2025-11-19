@@ -16,7 +16,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    // Set initial values
     _namaController.text = "Achyca Hafeez Wibowo";
     _gmailController.text = "adhykarya@gmail.com";
     _waktuAktifController.text = "08.00 - 17.00";
@@ -68,6 +67,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   label: "Nama",
                   controller: _namaController,
                   hintText: "Masukkan nama lengkap",
+                  readOnly: true,  
                 ),
                 const SizedBox(height: 25),
 
@@ -75,8 +75,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   label: "Gmail",
                   controller: _gmailController,
                   hintText: "Masukkan alamat email",
-                  keyboardType: TextInputType.emailAddress,
+                  readOnly: true,
                 ),
+
                 const SizedBox(height: 25),
 
                 _buildFormField(
@@ -119,11 +120,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Widget _buildFormField({
-    required String label,
-    required TextEditingController controller,
-    required String hintText,
-    TextInputType keyboardType = TextInputType.text,
+ Widget _buildFormField({
+  required String label,
+  required TextEditingController controller,
+  required String hintText,
+  TextInputType keyboardType = TextInputType.text,
+  bool readOnly = false, 
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -146,6 +148,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: TextField(
             controller: controller,
             keyboardType: keyboardType,
+            readOnly: readOnly,
+            enabled: !readOnly,
+            onTap: readOnly ? () {} : null,
             decoration: InputDecoration(
               hintText: hintText,
               border: InputBorder.none,
@@ -164,6 +169,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ],
     );
   }
+
 
   void _simpanPerubahan(BuildContext context) {
     // Validasi form
