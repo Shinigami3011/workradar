@@ -21,6 +21,10 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
     });
   }
 
+  void _cancelSubTask() {
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppTemplate(
@@ -30,23 +34,44 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            _buildSubtaskNameField(),
-            SizedBox(height: 24),
-            
-            _buildSubtaskDetailField(),
-            SizedBox(height: 24),
-            
-            Divider(thickness: 1),
-            SizedBox(height: 16),
-            
-            _buildDateField(),
-            SizedBox(height: 20),
-            
-            _buildTimeField(),
-            SizedBox(height: 32),
-            
-            _buildSaveButton(),
+            // container utama
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+                border: Border.all(color: Color(0xFFEEEEEE)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSubtaskNameField(),
+                  SizedBox(height: 24),
+                  
+                  _buildSubtaskDeskField(),
+                  SizedBox(height: 24),
+                  
+                  Divider(thickness: 1),
+                  SizedBox(height: 16),
+                  
+                  _buildDateRangeField(),
+                  SizedBox(height: 20),
+                  
+                  _buildDeadlineField(),
+                  SizedBox(height: 32),
+                  
+                  _buildActionButtons(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -85,12 +110,12 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
     );
   }
 
-  Widget _buildSubtaskDetailField() {
+  Widget _buildSubtaskDeskField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Detail Subtugas',
+          'Deskripsi Subtugas',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
@@ -118,116 +143,200 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
     );
   }
 
-  Widget _buildDateField() {
+  Widget _buildDateRangeField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Tanggal',
           style: TextStyle(
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             fontSize: 16,
+            color: Color(0xFF444444),
           ),
         ),
         SizedBox(height: 8),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade400),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                '09/11/2024',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey.shade700,
-                ),
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Mulai',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF8F9FA),
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '09/11/2024',
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Icon(Icons.calendar_today, size: 20, color: Colors.grey.shade600),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              Icon(Icons.calendar_today, size: 20, color: Colors.grey.shade600),
-            ],
-          ),
+            ),
+            SizedBox(width: 12),
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text('-', style: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Selesai',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF8F9FA),
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '10/11/2024',
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Icon(Icons.calendar_today, size: 20, color: Colors.grey.shade600),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );
   }
 
-  Widget _buildTimeField() {
+  Widget _buildDeadlineField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // label jam mulai - jam selesai
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Jam Mulai',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-              ),
-            ),
-            Text(
-              'Jam Selesai',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-              ),
-            ),
-          ],
+        Text(
+          'Jam',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+            color: Color(0xFF444444),
+          ),
         ),
         SizedBox(height: 8),
-        // field waktu mulai & selesai
         Row(
           children: [
             Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade400),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '07:50 AM',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade700,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Mulai',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Icon(Icons.access_time, size: 18, color: Colors.grey.shade600),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 4),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF8F9FA),
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '08:00',
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Icon(Icons.access_time, size: 20, color: Colors.grey.shade600),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(width: 12),
-            Text('-', style: TextStyle(fontSize: 14)),
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text('-', style: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
+            ),
             SizedBox(width: 12),
             Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade400),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '11:45 AM',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade700,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Selesai',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w500,
                     ),
-                    Icon(Icons.access_time, size: 18, color: Colors.grey.shade600),
-                  ],
-                ),
+                  ),
+                  SizedBox(height: 4),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF8F9FA),
+                      border: Border.all(color: Colors.grey.shade300),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '17:00',
+                          style: TextStyle(
+                            color: Colors.grey.shade600,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Icon(Icons.access_time, size: 20, color: Colors.grey.shade600),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -236,27 +345,48 @@ class _AddSubtaskScreenState extends State<AddSubtaskScreen> {
     );
   }
 
-  Widget _buildSaveButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: _saveSubtask,
-        child: Text(
-          'Simpan',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        Expanded(
+          child: OutlinedButton(
+            onPressed: _cancelSubTask,
+            child: Text(
+              'Batal',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+            style: OutlinedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              side: BorderSide(color: Colors.grey.shade400),
+            ),
           ),
         ),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue,
-          foregroundColor: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
+        SizedBox(width: 16),
+        Expanded(
+          child: ElevatedButton(
+            onPressed: _saveSubtask,
+            child: Text(
+              'Simpan',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF4CAF50),
+              foregroundColor: Colors.white,
+              padding: EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 2,
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
