@@ -12,4 +12,5 @@ class AppScreens {
   static const String editTask = '';
   static const String settings = '/pengaturan';
   static const String login = '/login';
+  static const String editProfile = '/edit-profil';
 }

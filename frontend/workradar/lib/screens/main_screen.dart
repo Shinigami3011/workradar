@@ -37,7 +37,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return AppTemplate(
-      currentRoute: '/beranda',
+      currentRoute: '',
+      appBarColor: Color(0xFF4A90E2),
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -45,7 +46,7 @@ class _MainScreenState extends State<MainScreen> {
             end: Alignment.bottomCenter,
             colors: [
               Color(0xFF4A90E2),
-              Colors.white,
+              Color(0xF1F2F7),
             ],
             stops: [0.4, 0.4],
           ),

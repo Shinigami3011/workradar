@@ -8,7 +8,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppTemplate(
-      currentRoute: AppScreens.settings, // sesuaikan dengan route settings kamu
+      currentRoute: AppScreens.settings,
       child: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -80,7 +80,7 @@ class SettingsScreen extends StatelessWidget {
                 icon: Icons.person,
                 title: "Edit Profile",
                 onTap: () {
-                  // Navigator.pushNamed(context, AppScreens.editProfile);
+                  _showEditProfileDialog(context);
                 },
               ),
               _buildMenuButton(
@@ -157,6 +157,87 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  // ===== Edit Profile Dialog =====
+  void _showEditProfileDialog(BuildContext context) {
+    TextEditingController namaController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController waktuController = TextEditingController();
+
+    // Set initial values
+    namaController.text = "Adhyca Hafeez Wibowo";
+    emailController.text = "www@gmail.com";
+    waktuController.text = "08.00 - 17.00";
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(
+          "Edit Profil",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildDialogField("Nama", namaController, "Masukkan nama"),
+              const SizedBox(height: 16),
+              _buildDialogField("Gmail", emailController, "Masukkan email"),
+              const SizedBox(height: 16),
+              _buildDialogField("Waktu Aktif", waktuController, "Contoh: 08.00 - 17.00"),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Batal"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Simpan perubahan di sini
+              Navigator.pop(context);
+              _showSuccessMessage(context);
+            },
+            child: const Text("Simpan"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDialogField(String label, TextEditingController controller, String hint) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(height: 4),
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: hint,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showSuccessMessage(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Profil berhasil diperbarui"),
+        backgroundColor: Colors.green,
+        duration: Duration(seconds: 2),
       ),
     );
   }
