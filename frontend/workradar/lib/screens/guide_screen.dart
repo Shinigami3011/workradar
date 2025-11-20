@@ -60,6 +60,25 @@ class GuideScreen extends StatelessWidget {
                     size: 40,
                   ),
                 )
+                ,
+                // Grey bar at bottom of the video
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    color: Colors.grey.withOpacity(0.7),
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
