@@ -3,6 +3,7 @@ import 'app_screens.dart';
 import '../screens/main_screen.dart';
 import '../screens/task_screen.dart';
 import '../screens/settings_screen.dart';
+import '../screens/guide_screen.dart';
 
 class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -13,6 +14,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => TaskScreen());
       case AppScreens.settings:
         return MaterialPageRoute(builder: (_) => SettingsScreen());
+      case AppScreens.guide:
+        return MaterialPageRoute(builder: (_) => const GuideScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

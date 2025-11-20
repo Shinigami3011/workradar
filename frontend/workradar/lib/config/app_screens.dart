@@ -3,6 +3,7 @@ export '../screens/main_screen.dart';
 export '../screens/task_screen.dart';
 export '../screens/settings_screen.dart';
 export '../screens/login.dart';
+export '../screens/guide_screen.dart';
 
 class AppScreens {
   static const String home = '/beranda';
@@ -13,4 +14,5 @@ class AppScreens {
   static const String settings = '/pengaturan';
   static const String login = '/login';
   static const String editProfile = '/edit-profil';
+  static const String guide = '/guide';
 }

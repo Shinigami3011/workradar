@@ -87,7 +87,7 @@ class SettingsScreen extends StatelessWidget {
                 icon: Icons.menu_book_rounded,
                 title: "Guide",
                 onTap: () {
-                  // Navigator.pushNamed(context, AppScreens.guide);
+                  Navigator.pushNamed(context, AppScreens.guide);
                 },
               ),
               _buildMenuButton(
